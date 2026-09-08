@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -154,13 +153,11 @@ select option{background:#fff;color:var(--t)}
   </div>
 
   <!-- ORDERS -->
-
   <div id="tab-orders" class="tab-content active">
     <div id="orders-container"><div class="empty"><div class="empty-icon">🍃</div><div>No orders yet.<br/>Customers scan QR to order.</div></div></div>
   </div>
 
   <!-- MENU -->
-
   <div id="tab-menu" class="tab-content">
     <div class="section-header">
       <div class="section-title">Menu Items</div>
@@ -193,7 +190,6 @@ select option{background:#fff;color:var(--t)}
   </div>
 
   <!-- HISTORY -->
-
   <div id="tab-history" class="tab-content">
     <div class="section-title" style="margin-bottom:14px">📊 Order History</div>
     <div class="sales-summary" id="sales-summary"></div>
@@ -211,7 +207,6 @@ select option{background:#fff;color:var(--t)}
   </div>
 
   <!-- QR -->
-
   <div id="tab-qr" class="tab-content">
     <div class="section-title" style="margin-bottom:6px">Table QR Codes</div>
     <p style="color:var(--t2);font-size:13px;margin-bottom:18px">Print these and place on each table. Customers scan to open your menu.</p>
@@ -219,7 +214,6 @@ select option{background:#fff;color:var(--t)}
   </div>
 
   <!-- SETTINGS -->
-
   <div id="tab-settings" class="tab-content">
     <div class="section-title" style="margin-bottom:16px">Appearance & Settings</div>
     <div class="card" style="margin-bottom:14px">
@@ -260,29 +254,25 @@ select option{background:#fff;color:var(--t)}
       </div>
     </div>
 
-```
-<!-- CUSTOM CATEGORIES -->
-<div class="card" style="margin-top:4px">
-  <div style="font-weight:800;color:var(--p);margin-bottom:10px">🏷️ Menu Categories</div>
-  <div id="cat-tags-display"></div>
-  <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-    <input type="text" id="new-cat-name" placeholder="Category name e.g. Breakfast" style="flex:1;min-width:120px"/>
-    <input type="text" id="new-cat-emoji" placeholder="🍳" style="width:60px"/>
-    <button class="btn btn-primary btn-sm" onclick="addCategory()">+ Add</button>
-  </div>
-</div>
+    <!-- CUSTOM CATEGORIES -->
+    <div class="card" style="margin-top:4px">
+      <div style="font-weight:800;color:var(--p);margin-bottom:10px">🏷️ Menu Categories</div>
+      <div id="cat-tags-display"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <input type="text" id="new-cat-name" placeholder="Category name e.g. Breakfast" style="flex:1;min-width:120px"/>
+        <input type="text" id="new-cat-emoji" placeholder="🍳" style="width:60px"/>
+        <button class="btn btn-primary btn-sm" onclick="addCategory()">+ Add</button>
+      </div>
+    </div>
 
-<div class="card" style="margin-top:4px">
-  <div style="font-weight:800;color:var(--p);margin-bottom:6px">🔥 Firebase Status</div>
-  <div id="firebase-status"></div>
-</div>
-```
-
+    <div class="card" style="margin-top:4px">
+      <div style="font-weight:800;color:var(--p);margin-bottom:6px">🔥 Firebase Status</div>
+      <div id="firebase-status"></div>
+    </div>
   </div>
 </div>
 
 <!-- CUSTOMER PAGE -->
-
 <div id="customer-page" class="page">
   <div class="cust-header">
     <div class="cust-header-top">
@@ -308,7 +298,6 @@ select option{background:#fff;color:var(--t)}
 </div>
 
 <!-- SUCCESS PAGE -->
-
 <div id="success-page" class="page">
   <div class="success-screen">
     <div style="font-size:80px;animation:pop .5s ease">✅</div>
@@ -394,7 +383,8 @@ if(useFB&&db){
   });
   onValue(ref(db,'menu'),(snap)=>{
     const data=snap.val();
-    if(data){menu=Object.values(data);saveL('rms_menu',menu);renderMenu();}
+    if(data){menu=Object.entries(data).map(([k,v])=>({...v,fbKey:k}));saveL('rms_menu',menu);renderMenu();}
+    else{menu=[];saveL('rms_menu',menu);renderMenu();}
   });
   onValue(ref(db,'settings'),(snap)=>{
     const data=snap.val();
@@ -795,6 +785,5 @@ window.submitOrder=function(){
 };
 window.orderMore=function(){document.getElementById('cart-note').value='';cart={};showCustomer();};
 </script>
-
 </body>
 </html>
